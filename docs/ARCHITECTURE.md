@@ -37,3 +37,7 @@ Free-tier hosting deliberately limits scope. This is not a horizontally scalable
 ## Phase 3: Grouped holdout audit
 
 A seeded deterministic grouping on normalized text prevents the same exact text entering both partitions. Warnings flag missing class coverage and conflicting duplicate labels. This does not detect semantic near-duplicates or independently attest externally imported training metrics.
+
+## Phase 4: Delegated API credentials
+
+`0004_access.sql` introduces expiring, revocable, SHA-256-hashed delegated credentials and an issuance/revocation audit. Authentication is enforced by `src/access.ts` from `withApi`, before any domain route executes. The shared API key policy does **not** implement object-level ACLs or tenant isolation. Access operations are confined to the root Worker `ADMIN_TOKEN`, and delegated keys are intentionally unable to administer credentials. See [`SECURITY.md`](SECURITY.md).
