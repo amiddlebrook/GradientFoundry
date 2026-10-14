@@ -2,7 +2,7 @@ name: Deploy to Cloudflare Workers
 on:
   push:
     branches: [main]
-  workflow_dispatch:
+  workflow_dispatch: {}
 permissions:
   contents: read
 concurrency:
@@ -34,3 +34,7 @@ jobs:
         run: bash scripts/bootstrap-d1.sh
       - name: Deploy API and static site
         run: npx wrangler deploy
+      - name: Configure protected API secret
+        env:
+          APP_ADMIN_TOKEN: ${{ secrets.APP_ADMIN_TOKEN }}
+        run: printf '%s' "$APP_ADMIN_TOKEN" | npx wrangler secret put ADMIN_TOKEN
