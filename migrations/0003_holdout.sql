@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS holdout_audits(id TEXT PRIMARY KEY,dataset_id TEXT NOT NULL REFERENCES datasets(id),seed INTEGER NOT NULL,test_fraction REAL NOT NULL,train_count INTEGER NOT NULL,test_count INTEGER NOT NULL,duplicate_count INTEGER NOT NULL,warning_count INTEGER NOT NULL,report TEXT NOT NULL,created_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS idx_holdout_dataset ON holdout_audits(dataset_id,created_at DESC);

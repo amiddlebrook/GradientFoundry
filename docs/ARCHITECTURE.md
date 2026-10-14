@@ -33,3 +33,7 @@ All persistent data is stored in per-application D1. The application frontend an
 ## Design tradeoffs
 
 Free-tier hosting deliberately limits scope. This is not a horizontally scalable, multi-tenant production system; global SLAs, audited governance and paid provider budgets cannot be validated with tiny synthetic workloads. No paid upgrade should occur automatically.
+
+## Phase 3: Grouped holdout audit
+
+A seeded deterministic grouping on normalized text prevents the same exact text entering both partitions. Warnings flag missing class coverage and conflicting duplicate labels. This does not detect semantic near-duplicates or independently attest externally imported training metrics.

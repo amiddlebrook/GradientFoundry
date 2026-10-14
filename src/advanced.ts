@@ -8,8 +8,30 @@ export function profileDataset(records:Sample[]){
  if(Object.keys(labels).length<2)warnings.push('Classification requires at least two labels');
  return {sample_count:records.length,distinct_count:seen.size,duplicate_count:duplicates,label_distribution:labels,warnings};
 }
+export function auditHoldout(records:Sample[],testFraction=0.25,seed=42){
+ if(!Number.isFinite(testFraction)||testFraction<0.1||testFraction>0.5)fail(400,'test_fraction must be 0.10 to 0.50');
+ if(!Number.isSafeInteger(seed)||seed<0||seed>2147483647)fail(400,'seed must be a safe non-negative 32-bit integer');
+ // Group normalized texts before splitting to prevent exact duplicate leakage.
+ const groups=new Map<string,{label:string;count:number}>(),issues:string[]=[];
+ for(const r of records){const k=r.text.trim().toLowerCase().replace(/\s+/g,' '),prior=groups.get(k);if(prior&&prior.label!==r.label)issues.push('Conflicting labels for duplicate text: '+k.slice(0,48));groups.set(k,{label:prior?.label||r.label,count:(prior?.count||0)+1})}
+ const partition=(key:string)=>{let h=(seed^2166136261)>>>0;for(let i=0;i<key.length;i++)h=Math.imul(h^key.charCodeAt(i),16777619)>>>0;return (h>>>0)/4294967296<testFraction?'test':'train'};
+ const distribution:Record<string,{train:number;test:number}>={};let train=0,test=0;
+ for(const [key,g] of groups){const side=partition(key);distribution[g.label]??={train:0,test:0};distribution[g.label][side]+=g.count;if(side==='test')test+=g.count;else train+=g.count;}
+ for(const [label,d] of Object.entries(distribution))if(d.train===0||d.test===0)issues.push(`Label ${label} lacks ${d.train===0?'training':'test'} coverage`);
+ if(test===0||train===0)issues.push('Holdout is empty; adjust fraction or seed');
+ return {train_count:train,test_count:test,groups:groups.size,overlap_count:0,duplicate_count:records.length-groups.size,distribution,warnings:[...new Set(issues)],test_fraction:testFraction,seed};
+}
 export async function advancedApi(req:Request,env:Env,url:URL):Promise<Response|null>{
  const p=url.pathname,m=req.method;
+ if(p==='/api/holdout-audits'&&m==='GET')return json({items:await list(env,'SELECT a.id,a.dataset_id,d.name dataset,a.train_count,a.test_count,a.duplicate_count,a.warning_count,a.test_fraction,a.seed,a.created_at FROM holdout_audits a JOIN datasets d ON d.id=a.dataset_id ORDER BY a.created_at DESC LIMIT ?',limit(url))});
+ const split=p.match(/^\/api\/datasets\/([^/]+)\/holdout$/);
+ if(split&&m==='POST'){
+  const dataset=await first<{id:string;records:string}>(env,'SELECT id,records FROM datasets WHERE id=?',split[1]);if(!dataset)fail(404,'Dataset not found');
+  const b=await body(req),records=JSON.parse(dataset.records) as Sample[];
+  const result=auditHoldout(records,b.test_fraction===undefined?0.25:Number(b.test_fraction),b.seed===undefined?42:Number(b.seed));
+  const id=uid();await execute(env,'INSERT INTO holdout_audits VALUES(?,?,?,?,?,?,?,?,?,?)',id,dataset.id,result.seed,result.test_fraction,result.train_count,result.test_count,result.duplicate_count,result.warnings.length,JSON.stringify(result),now());
+  return json({id,dataset_id:dataset.id,...result},201);
+ }
  if(p==='/api/dataset-profiles'&&m==='GET')return json({items:await list(env,'SELECT p.id,d.name dataset,p.sample_count,p.distinct_count,p.duplicate_count,p.fingerprint,p.warnings,p.created_at FROM dataset_profiling p JOIN datasets d ON d.id=p.dataset_id ORDER BY p.created_at DESC LIMIT ?',limit(url))});
  const profile=p.match(/^\/api\/datasets\/([^/]+)\/profile$/);
  if(profile&&m==='POST'){

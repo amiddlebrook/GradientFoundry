@@ -200,6 +200,18 @@ export default {
       "id": "data-quality-review",
       "label": "Dataset Quality Review",
       "custom": "dataset-quality"
+    },
+    {
+      "id": "holdout",
+      "label": "Holdout Audits",
+      "endpoint": "/api/holdout-audits",
+      "columns": [
+        "dataset",
+        "train_count",
+        "test_count",
+        "warning_count",
+        "created_at"
+      ]
     }
   ]
 };
