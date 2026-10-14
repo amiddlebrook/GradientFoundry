@@ -87,6 +87,12 @@ async function custom(spec){const el=document.getElementById('content');
  document.getElementById('record').onsubmit=async e=>{e.preventDefault();try{const data=JSON.parse(e.target.elements.result.value);const r=await api('/api/experiments/'+e.target.elements.experiment.value+'/runs','POST',data);document.getElementById('results').innerHTML=resultCard(r,'Registered run');success('Run imported')}catch(ex){error(ex)}};
  const seed=document.createElement('button');seed.className='btn secondary';seed.textContent='Create sample dataset + experiment';el.prepend(seed);seed.onclick=async()=>{try{await api('/api/seed','POST',{});success('Example created')}catch(e){error(e)}};
  }
+ if(spec.custom==='dataset-quality'){
+ const [datasets,profiles]=await Promise.all([api('/api/datasets'),api('/api/dataset-profiles')]);
+ el.innerHTML=panel('Fingerprint and profile dataset',`<p class="muted">Check duplicate texts, class balance, held-out split risks and produce a deterministic SHA-256 dataset fingerprint.</p><form id="profile-data"><div class="field"><label>Dataset</label><select name="dataset">${datasets.items.map(d=>`<option value="${esc(d.id)}">${esc(d.name)}</option>`).join('')}</select></div><button class="btn">Run dataset quality review</button></form>`)+panel('Quality review history',table(profiles.items,['dataset','sample_count','distinct_count','duplicate_count','warnings','created_at']))+'<div id="results"></div>';
+ document.getElementById('profile-data').onsubmit=async e=>{e.preventDefault();try{const out=await api(`/api/datasets/${encodeURIComponent(e.target.elements.dataset.value)}/profile`,'POST',{});document.getElementById('results').innerHTML=resultCard(out,'Dataset quality result');success('Saved dataset fingerprint and profile')}catch(ex){error(ex)}};
+ }
+
 }
 async function render(){skeleton();title();const spec=app.sections.find(s=>s.id===page);try{if(page==='overview')await overview();else if(spec?.custom)await custom(spec);else if(spec)await renderList(spec);}catch(e){error(e)}}
 render();

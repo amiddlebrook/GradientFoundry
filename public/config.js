@@ -139,10 +139,7 @@ export default {
           "name": "stage",
           "type": "select",
           "options": [
-            "candidate",
-            "staging",
-            "production",
-            "archived"
+            "candidate"
           ]
         }
       ],
@@ -154,20 +151,55 @@ export default {
       ],
       "action": {
         "title": "Promote model",
-        "endpoint": "/api/models/{id}/stage",
+        "endpoint": "/api/models/{id}/promote",
         "input": [
           {
             "name": "stage",
             "type": "select",
             "options": [
-              "candidate",
               "staging",
               "production",
               "archived"
             ]
+          },
+          {
+            "name": "reason",
+            "type": "textarea",
+            "default": "Reviewed measured holdout metrics and approved transition."
           }
         ]
       }
+    },
+    {
+      "id": "dataset-profiles",
+      "label": "Dataset Quality",
+      "endpoint": "/api/dataset-profiles",
+      "columns": [
+        "dataset",
+        "sample_count",
+        "distinct_count",
+        "duplicate_count",
+        "warnings",
+        "created_at"
+      ]
+    },
+    {
+      "id": "promotion-audit",
+      "label": "Model Governance",
+      "endpoint": "/api/promotions",
+      "columns": [
+        "model",
+        "from_stage",
+        "to_stage",
+        "accuracy",
+        "reason",
+        "created_at"
+      ]
+    },
+    {
+      "id": "data-quality-review",
+      "label": "Dataset Quality Review",
+      "custom": "dataset-quality"
     }
   ]
 };
