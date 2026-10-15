@@ -8,3 +8,17 @@ body{background:#f7f5ee;color:#303b3d}.sidebar{background:#edece5;border-color:#
 .lab-stats span{background:#e5efed;border:1px solid #bad7cb;color:#2c6c58}.lab-stats span:nth-child(2){background:#e7ebf7;border-color:#c2cbe4;color:#475e8d}.lab-stats span:nth-child(3){background:#f8ece0;border-color:#e3c7ae;color:#9c5635}
 .lab-bar{background:#e1e8e4}.lab-bar i{background:#43817f}.lab-ledger-row{background:#eff3eb;border-left-color:#477f75}.lab-ledger-row:has(.lab-conflict){border-left-color:#b66c4a;background:#fff0e8}.lab-caption{color:#596b6d;opacity:1}
 :where(button,a,input,select,textarea):focus-visible{outline:3px solid #478886;outline-offset:2px}
+
+/* Phase 27 mobile acceptance: compact operation controls without hiding navigation. */
+@media(max-width:640px){
+ .topbar .actions{display:grid!important;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr)!important;gap:8px!important;width:100%;align-items:center!important;}
+ .topbar .actions>.enterprise-mode-button,.topbar .actions>.enterprise-quick{display:none!important;}
+ .topbar .actions>#auth,.topbar .actions>#refresh{grid-row:1;min-width:0!important;width:100%!important;max-width:none!important;padding:8px!important;font-size:14px!important;overflow-wrap:anywhere;}
+ .topbar .actions>#auth{grid-column:1;}
+ .topbar .actions>#refresh{grid-column:2;}
+ .topbar .actions>.readability-controls{grid-column:1/-1;grid-row:2;display:grid!important;grid-template-columns:minmax(104px,1fr) minmax(190px,2fr);gap:8px!important;width:100%!important;min-width:0;align-items:center;}
+ .readability-controls>.readability-menu{display:inline-flex!important;width:100%!important;margin:0!important;min-width:0!important;justify-content:center;}
+ .readability-controls>.readability-label{min-width:0;display:flex!important;align-items:center;justify-content:flex-end;gap:7px;white-space:nowrap!important;font-size:12px!important;margin:0!important;}
+ .readability-controls .readability-select{width:112px!important;min-width:112px!important;max-width:125px!important;font-size:14px!important;}
+ .readability-controls .readability-menu{border-radius:12px!important;background:#e7e5f0!important;color:#304c60!important;border:1px solid #7a73a1!important;}
+}
