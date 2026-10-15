@@ -1,0 +1,23 @@
+{
+  "accent": "#96CBF8",
+  "background": "#111B2B",
+  "hook": "ACCURACY IS NOT ENOUGH.",
+  "subhook": "Review the dataset, split, lineage and evidence.",
+  "feature1": "Inspect the entire experiment.",
+  "feature2": "Lineage is a contract.",
+  "proof": [
+    "Grouped holdout audits",
+    "SHA-256 run fingerprints",
+    "Governed registration"
+  ],
+  "mobileTitle": "Read the model record.",
+  "mobileLines": [
+    "Inspect data-quality gates.",
+    "Audit split reproducibility.",
+    "Review promotion history."
+  ],
+  "closing": "Reproducible, or not ready.",
+  "closingLine": "Explore datasets, experiments and the model registry.",
+  "share": "GradientFoundry makes model lineage reviewable: duplicate-aware dataset splits, recorded run fingerprints and governed registration. A research workflow on Cloudflare Workers + D1.",
+  "name": "GradientFoundry"
+}
