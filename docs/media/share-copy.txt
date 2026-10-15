@@ -1,0 +1,1 @@
+GradientFoundry makes model lineage reviewable: duplicate-aware dataset splits, recorded run fingerprints and governed registration. A research workflow on Cloudflare Workers + D1.
