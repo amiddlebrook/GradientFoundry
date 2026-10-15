@@ -1,3 +1,5 @@
+> **Phase 24:** Authenticated API integration regression tests and product-specific reliability safeguards. See [Phase 24 notes](docs/PHASE24_RELIABILITY_AND_SECURITY.md).
+
 > **Phase 23:** Balanced product-specific interface with purposeful action/status/data colors. Explicit pre-training data-quality gates, label balance and duplicate-group review with contradiction filtering. Existing history and workflows retained; fully authenticated browser release review remains outstanding.
 
 > **Phase 17:** The home route now opens into an interactive product-specific workspace (not a marketing hero). Without credentials, the homepage uses visibly labeled illustrative demo records; connecting an API key unlocks private D1 data. All previous tools remain available.
