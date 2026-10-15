@@ -13,6 +13,11 @@ A research-oriented experiment notebook that records datasets, train/test audits
 
 > **Project status — portfolio engineering application.** The interfaces, D1-backed APIs, tests, and automatic deployment are functional. This is **not** a certified or audited enterprise product, and there are no claims of SSO, multi-tenant isolation, unbounded free usage, or uptime SLAs.
 
+
+## Phase 15 — distinct flagship workspaces
+
+Performance Landscape: interactive precision/recall scatter with run-level reproducibility details and metrics comparison. The flagship is now the first screen. [Interface and security notes](docs/FLAGSHIP_WORKSPACE.md).
+
 ## Decision workspace (Phase 8)
 
 A dedicated operational decision screen is available under **Run Reviews**. This includes a real D1-backed API, validated writes and a product-specific interface; see [Decision workspace architecture](docs/DECISION_WORKSPACE.md).

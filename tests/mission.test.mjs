@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {measuredRuns,scoreDeltas} from '../public/mission.js';
+test('scatter excludes invalid or non-measured performance',()=>{assert.equal(measuredRuns([{accuracy:.5,precision_score:.4,recall_score:.3},{accuracy:2,precision_score:.2,recall_score:.2}]).length,1)});
+test('comparison deltas are percentage points',()=>{const a={accuracy:.7,precision_score:.4,recall_score:.9},b={accuracy:.8,precision_score:.5,recall_score:.85};const d=scoreDeltas(a,b);assert.ok(Math.abs(d.accuracy-10)<1e-9);assert.ok(Math.abs(d.recall_score+5)<1e-9)});
