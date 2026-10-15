@@ -8,6 +8,8 @@
 
 # GradientFoundry
 
+> **Phase 26:** Deterministic leakage-safe cross-validation — additional first-class product workflow and automated acceptance tests, while retaining free-tier fail-closed defaults. See [Phase 26 notes](docs/PHASE26_PRODUCT_WORKFLOWS.md).
+
 > **Phase 12: Live Atlas** — A production-deployed, authenticated spatial intelligence view using only records from the existing Workers/D1 APIs, unique entity-specific graph layouts, inspector, keyboard controls, responsive pan/zoom, layer filtering, and privacy-conscious export. [Interaction architecture and limitations](docs/SPATIAL_ATLAS.md).
 
 **ML lifecycle · dataset quality · governed model registry**  
@@ -60,7 +62,7 @@ The included Python trainer is a small standard-library softmax classification b
 
 ## Explore the currently published product
 
-**Phase 22 code in this archive is not yet deployed.** The URL below, if available, may still host an earlier version. The GitHub repository for this source archive has not been published in this release.
+**Current source:** The corresponding GitHub `main` branch is authoritative. The live deployment is separately verified by GitHub Actions after each push; local ZIP contents are not an independent deployment guarantee.
 
 
 Open **[GradientFoundry](https://portfolio-gradientfoundry.averymiddlebrook2014.workers.dev)**. Public visitors can inspect the branded, read-only product shell; actual database content and API operations require a credential. Each deployed application has **its own** D1 database, UI, API and release pipeline.

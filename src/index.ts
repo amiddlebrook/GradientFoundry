@@ -1,3 +1,4 @@
+import {crossValidationApi} from './cross-validation';
 import {domainLabApi} from './domain-lab';
 import {agentApi} from './agent';
 import {decisionApi} from './decision';
@@ -17,6 +18,7 @@ export async function api(req:Request,env:Env,url:URL):Promise<Response>{
   const decision=await decisionApi(req,env,url); if(decision) return decision;
   const studio=await studioApi(req,env,url); if(studio) return studio;
   const enhanced=await advancedApi(req,env,url); if(enhanced) return enhanced;
+  const cv=await crossValidationApi(req,env,url); if(cv) return cv;
   const lab=await domainLabApi(req,env,url); if(lab) return lab;
  if(p==='/api/overview'&&m==='GET') {const [d,e,r,models]=await Promise.all(['datasets','experiments','experiment_runs','models'].map(t=>first<{n:number}>(env,`SELECT count(*) n FROM ${t}`)));return json({metrics:[{label:'Datasets',value:count(d)},{label:'Experiments',value:count(e)},{label:'Training runs',value:count(r)},{label:'Registered models',value:count(models)}],recent:await list(env,'SELECT r.id,e.name experiment,r.accuracy,r.seed,r.created_at FROM experiment_runs r JOIN experiments e ON e.id=r.experiment_id ORDER BY r.created_at DESC LIMIT 8')})}
  if(p==='/api/datasets'&&m==='GET')return json({items:(await list<Dataset>(env,'SELECT * FROM datasets ORDER BY created_at DESC LIMIT ?',limit(url))).map(d=>({...d,record_count:JSON.parse(d.records).length,records:undefined}))});
