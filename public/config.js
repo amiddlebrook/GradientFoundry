@@ -4,6 +4,7 @@ export default {
   "accent": "#b99bf0",
   "icon": "✺",
   "sections": [
+    {"id":"datasetlab","label":"Dataset Quality Lab","custom":"domainlab"},
     {"id":"mission","label":"Performance Landscape","custom":"mission"},
     {"id":"registry","label":"Records Explorer","custom":"registry"},
     {

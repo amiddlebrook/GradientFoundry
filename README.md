@@ -52,7 +52,10 @@ flowchart LR
 
 The included Python trainer is a small standard-library softmax classification baseline. GradientFoundry does **not** train foundation models, guarantee dataset representativeness or attest externally imported metrics.
 
-## Explore the live product
+## Explore the currently published product
+
+**Phase 22 code in this archive is not yet deployed.** The URL below, if available, may still host an earlier version. The GitHub repository for this source archive has not been published in this release.
+
 
 Open **[GradientFoundry](https://portfolio-gradientfoundry.averymiddlebrook2014.workers.dev)**. Public visitors can inspect the branded, read-only product shell; actual database content and API operations require a credential. Each deployed application has **its own** D1 database, UI, API and release pipeline.
 
@@ -69,7 +72,7 @@ The sample data is intentionally synthetic. UI counters reflect database records
 **Requirements:** Node.js 22+, npm, and a Cloudflare account only if deploying. Git and Python 3.12 are useful for contributions; Python is required for this repository's Python tests when present.
 
 ```bash
-git clone https://github.com/amiddlebrook/GradientFoundry.git
+# Extract GradientFoundry-Phase22-Complete-Source.zip first
 cd GradientFoundry
 npm install
 npm run check
