@@ -20,7 +20,7 @@ A governed path from datasets to registered models.
 
 ## The problem
 
-The hardest part of model experiment notebook is not drawing a dashboard—it is making consequential decisions inspectable, recoverable and accountable.
+A model registry is only as trustworthy as the evidence behind each model. Duplicate examples can leak across splits, labels can conflict, and recorded metrics can lose their connection to the dataset. GradientFoundry treats data-quality checks, grouped validation, experiment fingerprints, and registration policy as one governed lifecycle.
 
 **GradientFoundry** is an engineering platform for governed dataset, experiment, and model lifecycles. Its primary audience is **ML practitioners building reproducible evaluation and registry workflows**. Detect data leakage, fingerprint runs and make model promotion reviewable.
 
