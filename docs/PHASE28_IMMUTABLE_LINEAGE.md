@@ -1,0 +1,5 @@
+# Immutable training lineage
+
+Training metrics are user-reported unless independently attested. The application now computes a SHA-256 fingerprint over the exact serialized dataset and the imported metrics payload when a run is recorded; the fingerprint record is stored separately as immutable metadata. Dataset records and experiment-run metrics cannot be modified in place, preventing silent history rewrites. Registration of a new candidate model fails closed if the run has no matching dataset lineage fingerprint. Previous unverified runs remain readable but cannot create new candidates until reimported through the verified capture path.
+
+`GET /api/runs/:id/lineage` reports data hash, metrics hash, whether records are unchanged, and the explicit `attested_by_trainer:false` trust limitation. **This does not prove external training occurred or that supplied accuracy is true.** Cryptographically signed trainer artifacts and an independent evaluator remain separate future requirements. Deterministic database-backed tests check both positive and failure paths. No cloud-paid artifact store is required.
