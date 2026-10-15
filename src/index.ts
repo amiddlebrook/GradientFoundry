@@ -1,3 +1,5 @@
+import {agentApi} from './agent';
+import {decisionApi} from './decision';
 import {studioApi} from './studio';
 import { advancedApi } from './advanced';
 import { withApi, body, first, list, execute, uid, now, json, required, oneOf, fail, limit, count, type Env } from './core';
@@ -10,6 +12,8 @@ export function validateRecords(items:unknown):{text:string;label:string}[]{
 }
 export async function api(req:Request,env:Env,url:URL):Promise<Response>{
  const p=url.pathname,m=req.method;
+  const agent=await agentApi(req,env,url); if(agent) return agent;
+  const decision=await decisionApi(req,env,url); if(decision) return decision;
   const studio=await studioApi(req,env,url); if(studio) return studio;
   const enhanced=await advancedApi(req,env,url); if(enhanced) return enhanced;
  if(p==='/api/overview'&&m==='GET') {const [d,e,r,models]=await Promise.all(['datasets','experiments','experiment_runs','models'].map(t=>first<{n:number}>(env,`SELECT count(*) n FROM ${t}`)));return json({metrics:[{label:'Datasets',value:count(d)},{label:'Experiments',value:count(e)},{label:'Training runs',value:count(r)},{label:'Registered models',value:count(models)}],recent:await list(env,'SELECT r.id,e.name experiment,r.accuracy,r.seed,r.created_at FROM experiment_runs r JOIN experiments e ON e.id=r.experiment_id ORDER BY r.created_at DESC LIMIT 8')})}
