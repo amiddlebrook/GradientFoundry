@@ -4,6 +4,8 @@ export default {
   "accent": "#b99bf0",
   "icon": "✺",
   "sections": [
+    {"id":"ops","label":"API Activity","custom":"ops"},
+    {"id":"studio","label":"Lineage Explorer","custom":"studio"},
     {
       "id": "datasets",
       "label": "Datasets",
