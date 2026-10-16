@@ -1,0 +1,1 @@
+Meet GradientFoundry. Inspect dataset quality and group duplicates before creating splits. Record experiments with reproducible fingerprints. Verify lineage and registration policy so model promotion rests on defensible evidence.
